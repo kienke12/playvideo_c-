@@ -1,0 +1,79 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+<Qt_DEFINES_>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_MULTIMEDIAWIDGETS_LIB;QT_MULTIMEDIA_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_CORE_LIB</Qt_DEFINES_>
+<Qt_INCLUDEPATH_>C:\Users\VCCorp\AppData\Local\Temp\lptdgtq2.ehu;D:\qt5-build\qtbase\include;D:\qt5-build\qtbase\include\QtMultimediaWidgets;D:\qt5-build\qtbase\include\QtMultimedia;D:\qt5-build\qtbase\include\QtWidgets;D:\qt5-build\qtbase\include\QtGui;D:\qt5-build\qtbase\include\QtANGLE;D:\qt5-build\qtbase\include\QtNetwork;D:\qt5-build\qtbase\include\QtCore;C:\Users\VCCorp\AppData\Local\Temp\lptdgtq2.ehu;D:\qt5\qtbase\mkspecs\win32-msvc</Qt_INCLUDEPATH_>
+<Qt_STDCPP_></Qt_STDCPP_>
+<Qt_RUNTIME_>MultiThreadedDebugDLL</Qt_RUNTIME_>
+<Qt_CL_OPTIONS_>-Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -Zc:referenceBinding -Zc:__cplusplus</Qt_CL_OPTIONS_>
+<Qt_LIBS_>D:\qt5-build\qtbase\lib\Qt5MultimediaWidgetsd.lib;D:\qt5-build\qtbase\lib\Qt5Multimediad.lib;D:\qt5-build\qtbase\lib\Qt5Widgetsd.lib;D:\qt5-build\qtbase\lib\Qt5Guid.lib;D:\qt5-build\qtbase\lib\Qt5Networkd.lib;D:\qt5-build\qtbase\lib\Qt5Cored.lib;D:\qt5-build\qtbase\lib\libEGLd.lib;D:\qt5-build\qtbase\lib\libGLESv2d.lib;gdi32.lib;user32.lib;D:\qt5-build\qtbase\lib\qtmaind.lib;"C:\Program Files (x86)\Windows Kits\10\lib\10.0.18362.0\um\x64\shell32.lib"</Qt_LIBS_>
+<Qt_LINK_OPTIONS_>"/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'"</Qt_LINK_OPTIONS_>
+<QMake_QT_SYSROOT_></QMake_QT_SYSROOT_>
+<QMake_QT_INSTALL_PREFIX_>D:/qt5-build/qtbase</QMake_QT_INSTALL_PREFIX_>
+<QMake_QT_INSTALL_PREFIXSLASHsrc_>D:/qt5/qtbase</QMake_QT_INSTALL_PREFIXSLASHsrc_>
+<QMake_QT_INSTALL_ARCHDATA_>D:/qt5-build/qtbase</QMake_QT_INSTALL_ARCHDATA_>
+<QMake_QT_INSTALL_ARCHDATASLASHsrc_>D:/qt5/qtbase</QMake_QT_INSTALL_ARCHDATASLASHsrc_>
+<QMake_QT_INSTALL_DATA_>D:/qt5-build/qtbase</QMake_QT_INSTALL_DATA_>
+<QMake_QT_INSTALL_DATASLASHsrc_>D:/qt5/qtbase</QMake_QT_INSTALL_DATASLASHsrc_>
+<QMake_QT_INSTALL_DOCS_>D:/qt5-build/qtbase/doc</QMake_QT_INSTALL_DOCS_>
+<QMake_QT_INSTALL_DOCSSLASHsrc_>D:/qt5/qtbase/doc</QMake_QT_INSTALL_DOCSSLASHsrc_>
+<QMake_QT_INSTALL_HEADERS_>D:/qt5-build/qtbase/include</QMake_QT_INSTALL_HEADERS_>
+<QMake_QT_INSTALL_HEADERSSLASHsrc_>D:/qt5/qtbase/include</QMake_QT_INSTALL_HEADERSSLASHsrc_>
+<QMake_QT_INSTALL_LIBS_>D:/qt5-build/qtbase/lib</QMake_QT_INSTALL_LIBS_>
+<QMake_QT_INSTALL_LIBSSLASHsrc_>D:/qt5/qtbase/lib</QMake_QT_INSTALL_LIBSSLASHsrc_>
+<QMake_QT_INSTALL_LIBEXECS_>D:/qt5-build/qtbase/bin</QMake_QT_INSTALL_LIBEXECS_>
+<QMake_QT_INSTALL_LIBEXECSSLASHsrc_>D:/qt5/qtbase/bin</QMake_QT_INSTALL_LIBEXECSSLASHsrc_>
+<QMake_QT_INSTALL_BINS_>D:/qt5-build/qtbase/bin</QMake_QT_INSTALL_BINS_>
+<QMake_QT_INSTALL_BINSSLASHsrc_>D:/qt5/qtbase/bin</QMake_QT_INSTALL_BINSSLASHsrc_>
+<QMake_QT_INSTALL_TESTS_>D:/qt5-build/qtbase/tests</QMake_QT_INSTALL_TESTS_>
+<QMake_QT_INSTALL_TESTSSLASHsrc_>D:/qt5/qtbase/tests</QMake_QT_INSTALL_TESTSSLASHsrc_>
+<QMake_QT_INSTALL_PLUGINS_>D:/qt5-build/qtbase/plugins</QMake_QT_INSTALL_PLUGINS_>
+<QMake_QT_INSTALL_PLUGINSSLASHsrc_>D:/qt5/qtbase/plugins</QMake_QT_INSTALL_PLUGINSSLASHsrc_>
+<QMake_QT_INSTALL_IMPORTS_>D:/qt5-build/qtbase/imports</QMake_QT_INSTALL_IMPORTS_>
+<QMake_QT_INSTALL_IMPORTSSLASHsrc_>D:/qt5/qtbase/imports</QMake_QT_INSTALL_IMPORTSSLASHsrc_>
+<QMake_QT_INSTALL_QML_>D:/qt5-build/qtbase/qml</QMake_QT_INSTALL_QML_>
+<QMake_QT_INSTALL_QMLSLASHsrc_>D:/qt5/qtbase/qml</QMake_QT_INSTALL_QMLSLASHsrc_>
+<QMake_QT_INSTALL_TRANSLATIONS_>D:/qt5-build/qtbase/translations</QMake_QT_INSTALL_TRANSLATIONS_>
+<QMake_QT_INSTALL_TRANSLATIONSSLASHsrc_>D:/qt5/qtbase/translations</QMake_QT_INSTALL_TRANSLATIONSSLASHsrc_>
+<QMake_QT_INSTALL_CONFIGURATION_></QMake_QT_INSTALL_CONFIGURATION_>
+<QMake_QT_INSTALL_EXAMPLES_>D:/qt5-build/qtbase/examples</QMake_QT_INSTALL_EXAMPLES_>
+<QMake_QT_INSTALL_EXAMPLESSLASHsrc_>D:/qt5/qtbase/examples</QMake_QT_INSTALL_EXAMPLESSLASHsrc_>
+<QMake_QT_INSTALL_DEMOS_>D:/qt5-build/qtbase/examples</QMake_QT_INSTALL_DEMOS_>
+<QMake_QT_INSTALL_DEMOSSLASHsrc_>D:/qt5/qtbase/examples</QMake_QT_INSTALL_DEMOSSLASHsrc_>
+<QMake_QT_HOST_PREFIX_>D:/qt5-build/qtbase</QMake_QT_HOST_PREFIX_>
+<QMake_QT_HOST_PREFIXSLASHsrc_>D:/qt5/qtbase</QMake_QT_HOST_PREFIXSLASHsrc_>
+<QMake_QT_HOST_DATA_>D:/qt5-build/qtbase</QMake_QT_HOST_DATA_>
+<QMake_QT_HOST_DATASLASHsrc_>D:/qt5/qtbase</QMake_QT_HOST_DATASLASHsrc_>
+<QMake_QT_HOST_BINS_>D:/qt5-build/qtbase/bin</QMake_QT_HOST_BINS_>
+<QMake_QT_HOST_BINSSLASHsrc_>D:/qt5/qtbase/bin</QMake_QT_HOST_BINSSLASHsrc_>
+<QMake_QT_HOST_LIBS_>D:/qt5-build/qtbase/lib</QMake_QT_HOST_LIBS_>
+<QMake_QT_HOST_LIBSSLASHsrc_>D:/qt5/qtbase/lib</QMake_QT_HOST_LIBSSLASHsrc_>
+<QMake_QMAKE_SPEC_>win32-msvc</QMake_QMAKE_SPEC_>
+<QMake_QMAKE_XSPEC_>win32-msvc</QMake_QMAKE_XSPEC_>
+<QMake_QMAKE_VERSION_>3.1</QMake_QMAKE_VERSION_>
+<QMake_QT_VERSION_>5.12.12</QMake_QT_VERSION_>
+<Qt_INCLUDEPATH_
+      >$(Qt_INCLUDEPATH_);x64\Debug\moc;x64\Debug\uic</Qt_INCLUDEPATH_>
+    <QtBkup_QtInstall
+      >qt5-build_qtbase</QtBkup_QtInstall>
+    <QtBkup_QtModules
+      >core;gui;multimedia;multimediawidgets;widgets</QtBkup_QtModules>
+    <QtBkup_QtPathBinaries
+      >bin</QtBkup_QtPathBinaries>
+    <QtBkup_QtPathLibraryExecutables
+      >bin</QtBkup_QtPathLibraryExecutables>
+    <QtBkup_QtHeaderSearchPath
+      ></QtBkup_QtHeaderSearchPath>
+    <QtBkup_QtLibrarySearchPath
+      ></QtBkup_QtLibrarySearchPath>
+    <QtBkup_QtVars
+      >DEFINES=/Project/ItemDefinitionGroup/ClCompile/PreprocessorDefinitions;INCLUDEPATH=/Project/ItemDefinitionGroup/ClCompile/AdditionalIncludeDirectories;STDCPP=/Project/ItemDefinitionGroup/ClCompile/LanguageStandard;RUNTIME=/Project/ItemDefinitionGroup/ClCompile/RuntimeLibrary;CL_OPTIONS=/Project/ItemDefinitionGroup/ClCompile/AdditionalOptions;LIBS=/Project/ItemDefinitionGroup/Link/AdditionalDependencies;LINK_OPTIONS=/Project/ItemDefinitionGroup/Link/AdditionalOptions</QtBkup_QtVars>
+    <QtBkup_QMakeCodeLines
+      ></QtBkup_QMakeCodeLines>
+    <QtBkup_QtBuildConfig
+      >debug</QtBkup_QtBuildConfig>
+    <QtVersion>5.12.12</QtVersion>
+    <QtVersionMajor>5</QtVersionMajor>
+    <QtVersionMinor>12</QtVersionMinor>
+    <QtVersionPatch>12</QtVersionPatch>
+  </PropertyGroup>
+</Project>
