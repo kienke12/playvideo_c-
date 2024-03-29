@@ -89,6 +89,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="slider.cpp" />
     <ClCompile Include="tableview.cpp" />
     <QtRcc Include="playvideo.qrc" />
     <QtUic Include="playvideo.ui" />
@@ -97,7 +98,12 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
+    <QtMoc Include="slider.h" />
     <ClInclude Include="tableview.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="playvideo.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

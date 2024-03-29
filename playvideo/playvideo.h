@@ -2,6 +2,7 @@
 #define TEST_H
 
 #include "tableview.h"
+#include "slider.h"
 
 #include <QtWidgets/QMainWindow>
 #include <QMediaPlayer>
@@ -11,6 +12,9 @@
 #include <QStandardItemModel>
 #include <QTableView>
 #include <QToolButton>
+#include <QLabel>
+#include <QSplitter>
+#include <QSizePolicy>
 
 class PlayVideo : public QWidget
 {
@@ -22,21 +26,35 @@ public:
     
 private:
     void openVid(const QModelIndex& index);
+    void openAudio(const QModelIndex& index);
+    void playVid();
+    void soundClick();
+    void soundPlay(int value);
+
+protected:
+    void mouseMoveEvent(QMouseEvent* event) override;
 
 private:
-    QMediaPlayer mediaPlayer;
-    QMediaPlaylist mediaplaylist;
+    QMediaPlayer mediaPlayer;   
     QVideoWidget videoWidget;
-    QMediaPlaylist playlist;
     QStandardItemModel* model;
+    QStandardItemModel* modelAudio;
 
-    QVBoxLayout vboxlayout1, vboxlayout2;
-    QHBoxLayout hboxlayout1, hboxlayout2, hboxlayout;
+    QVBoxLayout vboxLayout;
+    QHBoxLayout hboxLayout1, hboxLayout2, hboxLayout;
 
     QTabWidget tabWidget;
 
-    QToolButton play;
+    QToolButton play, sound;
     QWidget layout;
+
+    Slider slider;
+    QSlider volumeSlider;
+    QWidget volumeWidget;
+    QVBoxLayout volumeLayout;
+    QLabel volumeLabel;
+
+    QPoint m_previousPos;
 };
 
 #endif

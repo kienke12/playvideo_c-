@@ -18,6 +18,7 @@ class Videoplay : public QObject
 {
 public:
 	Videoplay();
-	QTableView* cre_table(QStandardItemModel* model);
+	QTableView * creTableVideo(QStandardItemModel* );
+	QTableView* creTableAudio(QStandardItemModel* );
 };
 #pragma once
