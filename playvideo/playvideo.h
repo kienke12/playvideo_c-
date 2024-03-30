@@ -31,9 +31,6 @@ private:
     void soundClick();
     void soundPlay(int value);
 
-protected:
-    void mouseMoveEvent(QMouseEvent* event) override;
-
 private:
     QMediaPlayer mediaPlayer;   
     QVideoWidget videoWidget;

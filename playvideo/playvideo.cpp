@@ -6,6 +6,8 @@ PlayVideo::PlayVideo(QWidget *parent)
 {
     Videoplay video;
 
+    QSplitter* splitter = new QSplitter(Qt::Horizontal, this);
+
     QPalette pal;
     videoWidget.setPalette(pal);
     videoWidget.setAutoFillBackground(true);
@@ -24,19 +26,28 @@ PlayVideo::PlayVideo(QWidget *parent)
     buttonLayout->addLayout(&hboxLayout1);
     buttonLayout->addLayout(&hboxLayout2);
 
+    QWidget* buttonWidget = new QWidget;
+    buttonWidget->setLayout(buttonLayout);
+
     QWidget* tab1 = new QWidget();
     QWidget* tab2 = new QWidget();
     model = new QStandardItemModel;
     modelAudio = new QStandardItemModel;
     tabWidget.addTab(tab1, "video");
     tabWidget.addTab(tab2, "music");
-    tabWidget.setFixedSize(200, 250);
+    tabWidget.setMaximumWidth(200);
+    tabWidget.setMinimumWidth(100);
 
     vboxLayout.setContentsMargins(0, 0, 0, 3);
     vboxLayout.setSpacing(3);
 
-    hboxLayout.addWidget(&tabWidget);
-    hboxLayout.addLayout(buttonLayout);
+    splitter->addWidget(&tabWidget);
+    splitter->addWidget(buttonWidget);
+    QList<int> sizes = { 150, 350 };
+    splitter->setSizes(sizes);
+
+   /* hboxLayout.addWidget(&tabWidget);
+    hboxLayout.addLayout(buttonLayout);*/
 
     QTableView* videoTable = video.creTableVideo(model);
     QVBoxLayout* tab1Layout = new QVBoxLayout(tab1);
@@ -45,7 +56,7 @@ PlayVideo::PlayVideo(QWidget *parent)
     QVBoxLayout* tab2Layout = new QVBoxLayout(tab2);
     tab2Layout->addWidget(audioTable);
 
-    vboxLayout.addLayout(&hboxLayout);
+    vboxLayout.addWidget(splitter);
     setLayout(&vboxLayout);
 
     volumeWidget.setWindowFlag(Qt::ToolTip);
@@ -140,16 +151,16 @@ void PlayVideo::soundPlay(int value)
     volumeLabel.setText(QString::number(mediaPlayer.volume()));
 }
 
-void PlayVideo::mouseMoveEvent(QMouseEvent* event)
-{
-    if (event->buttons() & Qt::LeftButton) { 
-        QPoint delta = event->pos() - m_previousPos; 
-        QSize newSize = size() + QSize(delta.x(), delta.y());
-        resize(newSize); 
-    }
-    m_previousPos = event->pos(); 
-    
-}
+//void PlayVideo::mouseMoveEvent(QMouseEvent* event)
+//{
+//    if (event->buttons() & Qt::LeftButton) { 
+//        QPoint delta = event->pos() - m_previousPos; 
+//        QSize newSize = size() + QSize(delta.x(), delta.y());
+//        resize(newSize); 
+//    }
+//    m_previousPos = event->pos(); 
+//    
+//}
 
 PlayVideo::~PlayVideo()
 {

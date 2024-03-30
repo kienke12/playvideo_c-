@@ -37,7 +37,8 @@ QTableView* Videoplay::creTableAudio(QStandardItemModel* modelAudio)
     QTableView* table = new QTableView;
     table->setModel(modelAudio);
     table->model()->setHeaderData(0, Qt::Horizontal, "link");
-    QString audio[] = { "https://file-examples.com/storage/fe8ab7064b6605ee7a3c723/2017/11/file_example_MP3_700KB.mp3",
+    QString audio[] = { 
+                        "https://file-examples.com/storage/fe17d655216606dd89d5226/2017/11/file_example_MP3_700KB.mp3",
                         "https://samplelib.com/lib/preview/mp3/sample-9s.mp3",
                         "https://samplelib.com/lib/preview/mp3/sample-15s.mp3",
                         "https://samples-files.com/samples/Audio/mp3/sample-file-3.mp3" };

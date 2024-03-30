@@ -1,6 +1,2 @@
-﻿  moc playvideo.h
-  main.cpp
-  playvideo.cpp
-  tableview.cpp
-  moc_playvideo.cpp
+﻿  main.cpp
   playvideo.vcxproj -> C:\Users\VCCorp\source\repos\playvideo\x64\Debug\playvideo.exe
