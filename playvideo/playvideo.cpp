@@ -1,26 +1,40 @@
-#include "playvideo.h"
+﻿#include "playvideo.h"
 
 
 PlayVideo::PlayVideo(QWidget *parent)
     : QWidget(parent)
 {
+
     Videoplay video;
 
     QSplitter* splitter = new QSplitter(Qt::Horizontal, this);
 
-    QPalette pal;
-    videoWidget.setPalette(pal);
-    videoWidget.setAutoFillBackground(true);
+    volumeSlider.setMaximum(100);
+    volumeSlider.setMinimum(0);
+    volumeSlider.setValue(mediaPlayer.volume());
+    volumeLayout.addWidget(&volumeSlider);
+    volumeLayout.addWidget(&sound);
+    volumeWidget.setLayout(&volumeLayout); 
+    volumeSlider.setAutoFillBackground(true);
+    volumeSlider.hide();
 
     play.setIcon(style()->standardPixmap(QStyle::SP_MediaPause));
     sound.setIcon(style()->standardPixmap(QStyle::SP_MediaVolume));
+    fastForward.setIcon(style()->standardPixmap(QStyle::SP_MediaSeekForward));
+    reWind.setIcon(style()->standardPixmap(QStyle::SP_MediaSeekBackward));
 
     hboxLayout1.addWidget(&videoWidget);
+    hboxLayout2.addWidget(&reWind);
     hboxLayout2.addWidget(&play);
+    hboxLayout2.addWidget(&fastForward);
     hboxLayout2.addWidget(&slider);
-    hboxLayout2.addWidget(&sound);
+    hboxLayout2.addWidget(&volumeWidget);
+    hboxLayout2.addWidget(&timeLabel);
     hboxLayout2.addSpacing(5);
     hboxLayout2.setSpacing(10);
+    
+    timeLabel.setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+    timeLabel.setText("hh:mm:ss");
 
     QVBoxLayout* buttonLayout = new QVBoxLayout;
     buttonLayout->addLayout(&hboxLayout1);
@@ -35,7 +49,6 @@ PlayVideo::PlayVideo(QWidget *parent)
     modelAudio = new QStandardItemModel;
     tabWidget.addTab(tab1, "video");
     tabWidget.addTab(tab2, "music");
-    tabWidget.setMaximumWidth(200);
     tabWidget.setMinimumWidth(100);
 
     vboxLayout.setContentsMargins(0, 0, 0, 3);
@@ -46,33 +59,30 @@ PlayVideo::PlayVideo(QWidget *parent)
     QList<int> sizes = { 150, 350 };
     splitter->setSizes(sizes);
 
-   /* hboxLayout.addWidget(&tabWidget);
-    hboxLayout.addLayout(buttonLayout);*/
-
     QTableView* videoTable = video.creTableVideo(model);
     QVBoxLayout* tab1Layout = new QVBoxLayout(tab1);
+    addTab1.setIcon(QIcon("C:/Users/VCCorp/source/repos/playvideo/icon/add.png"));
+    removeTab1.setIcon(QIcon("C:/Users/VCCorp/source/repos/playvideo/icon/remove.png"));
+    layoutButton.addWidget(&addTab1);
+    layoutButton.addWidget(&removeTab1);
+    tab1Layout->addLayout(&layoutButton);
     tab1Layout->addWidget(videoTable);
+
     QTableView* audioTable = video.creTableAudio(modelAudio);
     QVBoxLayout* tab2Layout = new QVBoxLayout(tab2);
+    //tab2Layout->addWidget(&addTab2);
     tab2Layout->addWidget(audioTable);
 
     vboxLayout.addWidget(splitter);
     setLayout(&vboxLayout);
 
-    volumeWidget.setWindowFlag(Qt::ToolTip);
-    volumeLayout.addWidget(&volumeLabel, 0, Qt::AlignHCenter);
-    volumeLayout.addWidget(&volumeSlider, 0, Qt::AlignHCenter);
-    volumeWidget.setLayout(&volumeLayout);
-    volumeLayout.setMargin(2);
-
-    volumeSlider.setMaximum(100);
-    volumeSlider.setValue(mediaPlayer.volume());
-    volumeLabel.setText(QString::number(mediaPlayer.volume()));
-
     // connect video
     connect(videoTable, &QTableView::clicked, this, &PlayVideo::openVid);
-    connect(&play, &QToolButton::clicked, this, &PlayVideo::playVid);
     connect(audioTable, &QTableView::clicked, this, &PlayVideo::openAudio);
+
+    connect(&play, &QToolButton::clicked, this, &PlayVideo::playVid);
+    connect(&fastForward, &QToolButton::clicked, this, &PlayVideo::skipForward);
+    connect(&reWind, &QToolButton::clicked, this, &PlayVideo::skipBackward);
 
     connect(&sound, &QToolButton::clicked, this, &PlayVideo::soundClick);
     connect(&volumeSlider, &QSlider::sliderMoved, this, &PlayVideo::soundPlay);
@@ -81,8 +91,12 @@ PlayVideo::PlayVideo(QWidget *parent)
     connect(&mediaPlayer, &QMediaPlayer::positionChanged, &slider, &Slider::setValue);
     connect(&slider, &Slider::sliderMoved, &mediaPlayer, &QMediaPlayer::setPosition);
     connect(&slider, &Slider::pressedSlider, &mediaPlayer, &QMediaPlayer::setPosition);
-
     connect(&tabWidget, SIGNAL(sliderMoved(int)), this, SLOT(OnVolumeSliderMoved(int)));
+
+    connect(&mediaPlayer, &QMediaPlayer::durationChanged, this, &PlayVideo::timeDuration);
+    connect(&mediaPlayer, &QMediaPlayer::positionChanged, this, &PlayVideo::timePosition);
+    
+    connect(&addTab1, &QToolButton::clicked, this, &PlayVideo::addTab);
 
 }
 
@@ -134,14 +148,14 @@ void PlayVideo::playVid()
 
 void PlayVideo::soundClick()
 {
-    if (volumeWidget.isHidden())
+    if (volumeSlider.isHidden())
     {
-        volumeWidget.move(x() + sound.x(), y() + size().height() - 110);
-        volumeWidget.show();
+        
+        volumeSlider.show();
     }
     else
     {
-        volumeWidget.hide();
+        volumeSlider.hide();
     }
 }
 
@@ -151,16 +165,57 @@ void PlayVideo::soundPlay(int value)
     volumeLabel.setText(QString::number(mediaPlayer.volume()));
 }
 
-//void PlayVideo::mouseMoveEvent(QMouseEvent* event)
-//{
-//    if (event->buttons() & Qt::LeftButton) { 
-//        QPoint delta = event->pos() - m_previousPos; 
-//        QSize newSize = size() + QSize(delta.x(), delta.y());
-//        resize(newSize); 
-//    }
-//    m_previousPos = event->pos(); 
-//    
-//}
+void PlayVideo::timeDuration(qint64 duration)
+{
+    duration = duration / 1000;
+    duraTiontime = QTime((duration / 3600) % 1000, (duration / 60) % 60, duration % 60);
+
+    if (duration < 3600) format = "mm:ss";
+    else format = "hh:mm:ss";
+}
+
+void PlayVideo::timePosition(qint64 position)
+{
+    position /= 1000;
+    positiontime = QTime((position / 3600) % 1000, (position / 60) % 60, position % 60);
+    timeLabel.setText(positiontime.toString(format) + "/" + duraTiontime.toString(format));
+}
+
+void PlayVideo::skipForward(qint64 newPosition)
+{
+    newPosition = (mediaPlayer.position()+15000);
+    qint64 duration = mediaPlayer.duration();
+    newPosition = qMin(newPosition, duration);
+
+    mediaPlayer.setPosition(newPosition);
+}
+
+void PlayVideo::skipBackward(qint64 newPosition)
+{
+    newPosition = (mediaPlayer.position() - 15000);
+    qint64 duration = mediaPlayer.duration();
+    newPosition = qMin(newPosition, duration);
+
+    mediaPlayer.setPosition(newPosition);
+}
+
+void PlayVideo::addTab()
+{   
+    QWidget* addWidget = new QWidget();
+    addVBox.addWidget(&textLine);
+    addVBox.addWidget(&addButton);
+    addWidget->setLayout(&addVBox);
+    addWidget->setAutoFillBackground(true);
+    addWidget->show();
+}
+
+void PlayVideo::remove()
+{
+}
+
+void PlayVideo::addLink(QStandardItemModel*)
+{
+}
 
 PlayVideo::~PlayVideo()
 {

@@ -20,5 +20,6 @@ public:
 	Videoplay();
 	QTableView * creTableVideo(QStandardItemModel* );
 	QTableView* creTableAudio(QStandardItemModel* );
+
 };
 #pragma once
