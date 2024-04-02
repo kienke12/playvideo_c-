@@ -13,12 +13,14 @@
 #include <QMediaPlayer>
 #include <QFile>
 #include <QMediaPlaylist>
+#include <QVector>
+
 
 class Videoplay : public QObject
 {
 public:
 	Videoplay();
-	QTableView * creTableVideo(QStandardItemModel* );
+	QTableView* creTableVideo(QStandardItemModel*, QVector<QString>* video, int lenght );
 	QTableView* creTableAudio(QStandardItemModel* );
 
 };

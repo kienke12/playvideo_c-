@@ -6,7 +6,7 @@
 
 #include <QtWidgets/QMainWindow>
 #include <QMediaPlayer>
-#include <QMediaPlaylist>
+#include <QListWidget>
 #include <QVideoWidget>
 #include <QVBoxLayout>
 #include <QStandardItemModel>
@@ -18,6 +18,7 @@
 #include <QTime> 
 #include <QIcon>
 #include <QLineEdit>
+#include <QVector>
 
 class PlayVideo : public QWidget
 {
@@ -38,14 +39,18 @@ private:
     void skipForward(qint64);
     void skipBackward(qint64);
     void addTab();
-    void remove();
-    void addLink(QStandardItemModel*);
+    void removeTab();
+    void addLink();
+    void deleteLink(QListWidgetItem*);
+    void backBtnadd();
+    void backBtndelete();
 
 private:
     QMediaPlayer mediaPlayer;   
     QVideoWidget videoWidget;
     QStandardItemModel* model;
     QStandardItemModel* modelAudio; 
+    QListWidget listWidget;
     
     QVBoxLayout vboxLayout;
     QHBoxLayout hboxLayout1, hboxLayout2, hboxLayout, layoutButton;
@@ -56,22 +61,21 @@ private:
     QWidget layout;
 
     Slider slider;
-
     QSlider volumeSlider;
     QWidget volumeWidget;
     QVBoxLayout volumeLayout;
     QLabel volumeLabel, timeLabel;
 
     QPoint m_previousPos;
-
     QTime duraTiontime, positiontime;
     QString format;
 
-   
-    QToolButton addButton;
+    QToolButton addButton, cancelButton, removeButton, cancelButton1;
     QLineEdit textLine;
-    QVBoxLayout addVBox;
-   
+    QVBoxLayout addVBox, removeQVBox;
+    QWidget addWidget, removeWidget;
+    
+    QVector<QString> videoList;
 };
 
 #endif

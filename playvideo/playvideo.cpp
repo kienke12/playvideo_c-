@@ -6,16 +6,26 @@ PlayVideo::PlayVideo(QWidget *parent)
 {
 
     Videoplay video;
+    videoList = { "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
+                        "https://cdn.pixabay.com/vimeo/689949805/nhung-am-may-111179.mp4?width=640&hash=e19845a3e57fc7219de28645b3eec02d67d6b86e",
+                        "https://cdn.pixabay.com/vimeo/891655462/vach-a-192066.mp4?width=1280&hash=11491b2537a7651dfc6c1637d6302f8719d01248",
+                        "https://file-examples.com/storage/fe8ab7064b6605ee7a3c723/2017/04/file_example_MP4_480_1_5MG.mp4" };
+    int lenght = videoList.length();
+    qDebug() << lenght;
 
     QSplitter* splitter = new QSplitter(Qt::Horizontal, this);
 
+    volumeWidget.setWindowFlag(Qt::ToolTip);
     volumeSlider.setMaximum(100);
-    volumeSlider.setMinimum(0);
     volumeSlider.setValue(mediaPlayer.volume());
+    volumeLayout.addWidget(&volumeLabel);
     volumeLayout.addWidget(&volumeSlider);
     volumeLayout.addWidget(&sound);
     volumeWidget.setLayout(&volumeLayout); 
-    volumeSlider.setAutoFillBackground(true);
+    volumeLabel.setText(QString::number(mediaPlayer.volume()));
+    volumeLayout.setMargin(2);
+
+    volumeLabel.hide();
     volumeSlider.hide();
 
     play.setIcon(style()->standardPixmap(QStyle::SP_MediaPause));
@@ -59,7 +69,7 @@ PlayVideo::PlayVideo(QWidget *parent)
     QList<int> sizes = { 150, 350 };
     splitter->setSizes(sizes);
 
-    QTableView* videoTable = video.creTableVideo(model);
+    QTableView* videoTable = video.creTableVideo(model,&videoList, lenght);
     QVBoxLayout* tab1Layout = new QVBoxLayout(tab1);
     addTab1.setIcon(QIcon("C:/Users/VCCorp/source/repos/playvideo/icon/add.png"));
     removeTab1.setIcon(QIcon("C:/Users/VCCorp/source/repos/playvideo/icon/remove.png"));
@@ -97,7 +107,11 @@ PlayVideo::PlayVideo(QWidget *parent)
     connect(&mediaPlayer, &QMediaPlayer::positionChanged, this, &PlayVideo::timePosition);
     
     connect(&addTab1, &QToolButton::clicked, this, &PlayVideo::addTab);
-
+    connect(&addButton, &QToolButton::clicked, this, &PlayVideo::addLink);
+    connect(&cancelButton, &QToolButton::clicked, this, &PlayVideo::backBtnadd);
+    connect(&cancelButton1, &QToolButton::clicked, this, &PlayVideo::backBtndelete);
+    connect(&removeTab1, &QToolButton::clicked, this, &PlayVideo::removeTab);
+    connect(&listWidget, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(deleteLink(QListWidgetItem*)));
 }
 
 void PlayVideo::openVid(const QModelIndex& index) {
@@ -150,11 +164,12 @@ void PlayVideo::soundClick()
 {
     if (volumeSlider.isHidden())
     {
-        
+        volumeLabel.show();
         volumeSlider.show();
     }
     else
     {
+        volumeLabel.hide();
         volumeSlider.hide();
     }
 }
@@ -169,7 +184,6 @@ void PlayVideo::timeDuration(qint64 duration)
 {
     duration = duration / 1000;
     duraTiontime = QTime((duration / 3600) % 1000, (duration / 60) % 60, duration % 60);
-
     if (duration < 3600) format = "mm:ss";
     else format = "hh:mm:ss";
 }
@@ -186,7 +200,6 @@ void PlayVideo::skipForward(qint64 newPosition)
     newPosition = (mediaPlayer.position()+15000);
     qint64 duration = mediaPlayer.duration();
     newPosition = qMin(newPosition, duration);
-
     mediaPlayer.setPosition(newPosition);
 }
 
@@ -195,26 +208,97 @@ void PlayVideo::skipBackward(qint64 newPosition)
     newPosition = (mediaPlayer.position() - 15000);
     qint64 duration = mediaPlayer.duration();
     newPosition = qMin(newPosition, duration);
-
     mediaPlayer.setPosition(newPosition);
 }
 
 void PlayVideo::addTab()
 {   
-    QWidget* addWidget = new QWidget();
+    QHBoxLayout* setButton = new QHBoxLayout();
+    addWidget.setWindowFlag(Qt::ToolTip);
+    addButton.setText("add");
+    cancelButton.setText("Cancel");
     addVBox.addWidget(&textLine);
-    addVBox.addWidget(&addButton);
-    addWidget->setLayout(&addVBox);
-    addWidget->setAutoFillBackground(true);
-    addWidget->show();
+    setButton->addWidget(&addButton);
+    setButton->addWidget(&cancelButton);
+    addVBox.addLayout(setButton);
+    addWidget.setLayout(&addVBox);
+    addWidget.setAutoFillBackground(true);
+    addWidget.show();
 }
 
-void PlayVideo::remove()
-{
+void PlayVideo::removeTab()
+{    
+    QHBoxLayout* setButton = new QHBoxLayout();
+    removeWidget.setWindowFlag(Qt::ToolTip);
+    for (int i = 0; i < videoList.size(); ++i) {
+        listWidget.addItem(videoList.at(i));
+       
+    }
+    setButton->addWidget(&removeButton);
+    setButton->addWidget(&cancelButton1);
+    removeQVBox.addWidget(&listWidget);
+    removeQVBox.addLayout(setButton);
+    removeWidget.setLayout(&removeQVBox);
+    cancelButton1.setText("cancel");
+    removeButton.setText("delete");
+    removeWidget.setAutoFillBackground(true);
+    removeWidget.show();
+    /*removeWidget.setWindowFlag(Qt::ToolTip);
+    QTableView* table = new QTableView;
+    table->setModel(model);
+    table->model()->setHeaderData(0, Qt::Horizontal, "link");
+    model->setColumnCount(1);
+    model->setRowCount(videoList.length());
+    for (int row = 0; row < model->rowCount(); ++row) {
+        for (int column = 0; column < model->columnCount(); ++column) {
+            for (int i = 0; i < videoList.length(); i++) {
+                QModelIndex index = model->index(row, column);
+                QUrl link(videoList.at(row));
+                model->setData(index, link);
+                model->setData(index, link, Qt::UserRole);
+            }
+        }
+    }
+    table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    cancelButton1.setText("cancel");
+    removeQVBox.addWidget(table);
+    removeQVBox.addWidget(&cancelButton1);
+    removeWidget.setLayout(&removeQVBox);
+    removeWidget.setAutoFillBackground(true);*/
 }
 
-void PlayVideo::addLink(QStandardItemModel*)
+void PlayVideo::addLink()
 {
+    QString text = textLine.text();
+    videoList.push_back(text);
+    qDebug() << videoList.length();
+    model->setRowCount(videoList.length());
+    for (int row = 0; row < model->rowCount(); ++row) {
+        for (int column = 0; column < model->columnCount(); ++column) {
+            for (int i = 0; i < videoList.length(); i++) {
+                QModelIndex index = model->index(row, column);
+                QUrl link(videoList.at(row));
+                model->setData(index, link);
+                model->setData(index, link, Qt::UserRole);
+            }
+        }
+    }
+    addWidget.hide();  
+}
+
+void PlayVideo::deleteLink(QListWidgetItem*item)
+{
+    qDebug() << item;
+}
+
+void PlayVideo::backBtndelete()
+{
+    removeWidget.hide();
+}
+void PlayVideo::backBtnadd()
+{
+    addWidget.hide();
 }
 
 PlayVideo::~PlayVideo()
