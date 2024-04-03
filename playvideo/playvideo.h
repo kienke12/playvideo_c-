@@ -41,14 +41,14 @@ private:
     void addTab();
     void removeTab();
     void addLink();
-    void deleteLink(QListWidgetItem*);
+    void deleteLink(const QModelIndex& index);
     void backBtnadd();
     void backBtndelete();
 
 private:
     QMediaPlayer mediaPlayer;   
     QVideoWidget videoWidget;
-    QStandardItemModel* model;
+    QStandardItemModel* modelvid;
     QStandardItemModel* modelAudio; 
     QListWidget listWidget;
     
@@ -73,9 +73,11 @@ private:
     QToolButton addButton, cancelButton, removeButton, cancelButton1;
     QLineEdit textLine;
     QVBoxLayout addVBox, removeQVBox;
-    QWidget addWidget, removeWidget;
-    
+    QWidget addWid, deleteWidget;
+
     QVector<QString> videoList;
+
+    QWidget* volumeWidgetContainer;
 };
 
 #endif

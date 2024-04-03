@@ -9,7 +9,6 @@ QTableView* Videoplay::creTableVideo(QStandardItemModel* model, QVector<QString>
     table1->model()->setHeaderData(0, Qt::Horizontal, "link");
     
     model->setRowCount(lenght);
-    qDebug() << lenght;
     model->setColumnCount(1);
     for (int row = 0; row < model->rowCount(); ++row) {
         table1->setRowHeight(row, 60);
