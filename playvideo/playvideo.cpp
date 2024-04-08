@@ -9,8 +9,9 @@ PlayVideo::PlayVideo(QWidget* parent)
                         "https://cdn.pixabay.com/vimeo/891655462/vach-a-192066.mp4?width=1280&hash=11491b2537a7651dfc6c1637d6302f8719d01248",
                         "https://file-examples.com/storage/fe8ab7064b6605ee7a3c723/2017/04/file_example_MP4_480_1_5MG.mp4" };
     int lenght = videoList.length();
-
     QSplitter* splitter = new QSplitter(Qt::Horizontal, this);
+
+    // tạo volume
     volumeWidget = new QWidget(this);
     volumeWidget->setWindowFlag(Qt::ToolTip);
     volumeSlider.setMaximum(100);
@@ -41,15 +42,14 @@ PlayVideo::PlayVideo(QWidget* parent)
    
     timeLabel.setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
     timeLabel.setText("hh:mm:ss");
-    //end cot trai
 
-    QVBoxLayout* buttonLayout = new QVBoxLayout;
-    buttonLayout->addLayout(&hboxLayout1);
-    buttonLayout->addWidget(newWid);
-   
+    QVBoxLayout* rightLayout = new QVBoxLayout;
+    rightLayout->addLayout(&hboxLayout1);
+    rightLayout->addWidget(newWid);
     QWidget* buttonWidget = new QWidget;
-    buttonWidget->setLayout(buttonLayout);
+    buttonWidget->setLayout(rightLayout);
 
+    // left colunmn
     QWidget* tab1 = new QWidget();
     QWidget* tab2 = new QWidget();
     modelvid = new QStandardItemModel;
@@ -81,6 +81,7 @@ PlayVideo::PlayVideo(QWidget* parent)
 
     vboxLayout.addWidget(splitter);
     setLayout(&vboxLayout);
+    setMinimumSize(350, 165);
 
     //connect
     connect(videoTable, &QTableView::clicked, this, &PlayVideo::openVid);
@@ -172,11 +173,6 @@ void PlayVideo::soundClick()
 {
     if (volumeWidget->isHidden())
     {   
-        int parentWidth = QWidget::width();
-        int volumeHeight = QWidget::height();
-        qDebug() << sound.x();
-        qDebug() << parentWidth;
-        volumeWidget->move(parentWidth + x() - 45 , volumeHeight + y() -130 );
         volumeWidget->show();
     }
     else
@@ -271,7 +267,6 @@ void PlayVideo::removeTab()
 void PlayVideo::addLink()    
 {
     QString text = textLine.text();
-    qDebug() << textLine.text();;
     videoList.push_back(text);
     modelvid->setRowCount(videoList.length());
     for (int row = 0; row < modelvid->rowCount(); ++row) {
@@ -312,6 +307,24 @@ void PlayVideo::deleteLink(const QModelIndex& index)
 void PlayVideo::backBtndelete()
 {
     deleteWidget.setVisible(false);
+}
+
+void PlayVideo::moveEvent(QMoveEvent* event)
+{
+    QWidget::moveEvent(event);
+    volumeWidget->move(QWidget::width() + event->pos().x() - 45, QWidget::height() + event->pos().y() - 160);
+    addWid.move(QWidget::width() / 3 + event->pos().x(), QWidget::height() / 3 + event->pos().y()-30);
+    deleteWidget.move(QWidget::width() / 3 + event->pos().x(), QWidget::height() / 3 + event->pos().y() - 80);
+}
+
+void PlayVideo::resizeEvent(QResizeEvent* event)
+{
+    QSize oldSize = event->oldSize();
+    if (oldSize.width() == QWidget::width() && oldSize.height() != QWidget::height()) {
+        volumeWidget->move(QWidget::width() + x() - 45, QWidget::height() + y() - 130);
+    }
+    tabWidget.setMaximumWidth(QWidget::width() / 1.95);
+    volumeWidget->move(QWidget::width() + x() - 45, QWidget::height() + y() - 130);
 }
 
 void PlayVideo::backBtnadd()

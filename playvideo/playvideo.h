@@ -19,7 +19,7 @@
 #include <QIcon>
 #include <QLineEdit>
 #include <QVector>
-#include <QSizePolicy>
+#include <QDesktopWidget>
 
 class PlayVideo : public QWidget
 {
@@ -29,7 +29,7 @@ public:
     PlayVideo(QWidget *parent = nullptr);
     ~PlayVideo();
     
-private:
+public slots:
     void openVid(const QModelIndex& index);
     void openAudio(const QModelIndex& index);
     void playVid();
@@ -70,6 +70,9 @@ private:
     QWidget addWid, deleteWidget;
     QVector<QString> videoList;
 
+protected:
+    void resizeEvent(QResizeEvent* event) override;
+    void moveEvent(QMoveEvent* event) override;
 };
 
 #endif
