@@ -52,21 +52,19 @@ private:
     QVideoWidget videoWidget;
     QStandardItemModel* modelvid;
     QStandardItemModel* modelAudio; 
-    QVBoxLayout vboxLayout;
-    QHBoxLayout hboxLayout1, hboxLayout3, hboxLayout2, hboxLayout, layoutButton;
+    QVBoxLayout vboxLayout, volumeLayout, addVBox, removeQVBox;
+    QHBoxLayout hboxLayoutvid, hboxLayoutbtn, layoutButton;
     QTabWidget tabWidget;
     QToolButton play, sound, fastForward, reWind, addTab1, removeTab1;
     Slider slider;
     QSlider volumeSlider;
     QWidget* volumeWidget;
-    QVBoxLayout volumeLayout;
     QLabel volumeLabel, timeLabel;
-    QPoint m_previousPos;
+    QPoint m_previousPos, oldPos, newPos;
     QTime duraTiontime, positiontime;
     QString format;
     QToolButton addButton, cancelButton, removeButton, cancelButton1;
     QLineEdit textLine;
-    QVBoxLayout addVBox, removeQVBox;
     QWidget addWid, deleteWidget;
     QVector<QString> videoList;
 

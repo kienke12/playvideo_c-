@@ -10,7 +10,6 @@ PlayVideo::PlayVideo(QWidget* parent)
                         "https://file-examples.com/storage/fe8ab7064b6605ee7a3c723/2017/04/file_example_MP4_480_1_5MG.mp4" };
     int lenght = videoList.length();
     QSplitter* splitter = new QSplitter(Qt::Horizontal, this);
-
     // tạo volume
     volumeWidget = new QWidget(this);
     volumeWidget->setWindowFlag(Qt::ToolTip);
@@ -27,24 +26,25 @@ PlayVideo::PlayVideo(QWidget* parent)
     fastForward.setIcon(style()->standardPixmap(QStyle::SP_MediaSeekForward));
     reWind.setIcon(style()->standardPixmap(QStyle::SP_MediaSeekBackward));
 
-    hboxLayout1.addWidget(&videoWidget);
-    hboxLayout2.addWidget(&reWind);
-    hboxLayout2.addWidget(&play);
-    hboxLayout2.addWidget(&fastForward);
-    hboxLayout2.addWidget(&slider);
-    hboxLayout2.addWidget(&timeLabel);
-    hboxLayout2.addWidget(&sound);
-    hboxLayout2.addSpacing(5);
+    hboxLayoutvid.addWidget(&videoWidget);
+    hboxLayoutbtn.addWidget(&reWind);
+    hboxLayoutbtn.addWidget(&play);
+    hboxLayoutbtn.addWidget(&fastForward, 0, Qt::AlignHCenter);
+    hboxLayoutbtn.addWidget(&slider);
+    hboxLayoutbtn.addWidget(&timeLabel);
+    hboxLayoutbtn.addWidget(&sound, 0, Qt::AlignLeft);
+    hboxLayoutbtn.addSpacing(10);
+    hboxLayoutbtn.setSpacing(5);
 
-    QWidget* newWid = new QWidget();
-    newWid->setLayout(&hboxLayout2);
+    QWidget* newWid = new QWidget(this);
+    newWid->setLayout(&hboxLayoutbtn);
     newWid->setMaximumHeight(50);
    
     timeLabel.setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
     timeLabel.setText("hh:mm:ss");
 
     QVBoxLayout* rightLayout = new QVBoxLayout;
-    rightLayout->addLayout(&hboxLayout1);
+    rightLayout->addLayout(&hboxLayoutvid);
     rightLayout->addWidget(newWid);
     QWidget* buttonWidget = new QWidget;
     buttonWidget->setLayout(rightLayout);
@@ -311,8 +311,9 @@ void PlayVideo::backBtndelete()
 
 void PlayVideo::moveEvent(QMoveEvent* event)
 {
-    QWidget::moveEvent(event);
-    volumeWidget->move(QWidget::width() + event->pos().x() - 45, QWidget::height() + event->pos().y() - 160);
+    oldPos = event->oldPos();
+    newPos = event->pos();
+    volumeWidget->move(QWidget::width() + event->pos().x() - 52, QWidget::height() + event->pos().y() - 160);
     addWid.move(QWidget::width() / 3 + event->pos().x(), QWidget::height() / 3 + event->pos().y()-30);
     deleteWidget.move(QWidget::width() / 3 + event->pos().x(), QWidget::height() / 3 + event->pos().y() - 80);
 }
@@ -320,11 +321,16 @@ void PlayVideo::moveEvent(QMoveEvent* event)
 void PlayVideo::resizeEvent(QResizeEvent* event)
 {
     QSize oldSize = event->oldSize();
+    QSize newSize = event->size();
     if (oldSize.width() == QWidget::width() && oldSize.height() != QWidget::height()) {
-        volumeWidget->move(QWidget::width() + x() - 45, QWidget::height() + y() - 130);
+        volumeWidget->move(QWidget::width() + x() - 52, QWidget::height() + y() - 130);
+    }
+    if (newPos==oldPos) {
+        volumeWidget->move(event->size().width() + oldPos.x() - 52, event->size().height() + oldPos.y() - 160);
     }
     tabWidget.setMaximumWidth(QWidget::width() / 1.95);
-    volumeWidget->move(QWidget::width() + x() - 45, QWidget::height() + y() - 130);
+    hboxLayoutvid.update();
+    oldPos = newPos;
 }
 
 void PlayVideo::backBtnadd()
