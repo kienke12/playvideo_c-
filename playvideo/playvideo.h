@@ -45,7 +45,7 @@ public slots:
     void deleteLink(const QModelIndex& index);
     void backBtnadd();
     void backBtndelete();
-
+    
 private:
     QTableView tableVid;
     QMediaPlayer mediaPlayer;   
@@ -71,6 +71,7 @@ private:
 protected:
     void resizeEvent(QResizeEvent* event) override;
     void moveEvent(QMoveEvent* event) override;
-};
+    void changeEvent(QEvent* event) override;
+}; 
 
 #endif

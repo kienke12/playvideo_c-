@@ -318,6 +318,14 @@ void PlayVideo::moveEvent(QMoveEvent* event)
     deleteWidget.move(QWidget::width() / 3 + event->pos().x(), QWidget::height() / 3 + event->pos().y() - 80);
 }
 
+void PlayVideo::changeEvent(QEvent* event)
+{   
+    if (event->type() == QEvent::ActivationChange) {
+        volumeWidget->hide();
+    }
+    QWidget::changeEvent(event);
+}
+
 void PlayVideo::resizeEvent(QResizeEvent* event)
 {
     QSize oldSize = event->oldSize();
@@ -328,9 +336,10 @@ void PlayVideo::resizeEvent(QResizeEvent* event)
     if (newPos==oldPos) {
         volumeWidget->move(event->size().width() + oldPos.x() - 52, event->size().height() + oldPos.y() - 160);
     }
+    else{ oldPos = newPos; }
     tabWidget.setMaximumWidth(QWidget::width() / 1.95);
     hboxLayoutvid.update();
-    oldPos = newPos;
+   
 }
 
 void PlayVideo::backBtnadd()
@@ -342,4 +351,5 @@ void PlayVideo::backBtnadd()
 PlayVideo::~PlayVideo()
 {
 }
+
 
